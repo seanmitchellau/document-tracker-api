@@ -17,7 +17,7 @@ class DocumentPolicy
 
     public function view(User $user, Document $document): bool
     {
-        return true;
+        return $user->id === $document->owner_id;
     }
 
     public function create(User $user): bool
@@ -27,21 +27,21 @@ class DocumentPolicy
 
     public function update(User $user, Document $document): bool
     {
-        return true;
+        return $user->id === $document->owner_id;
     }
 
     public function delete(User $user, Document $document): bool
     {
-        return true;
+        return $user->id === $document->owner_id;
     }
 
     public function restore(User $user, Document $document): bool
     {
-        return true;
+        return $user->id === $document->owner_id;
     }
 
     public function forceDelete(User $user, Document $document): bool
     {
-        return true;
+        return $user->id === $document->owner_id;
     }
 }
