@@ -18,5 +18,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('documents', [DocumentController::class, 'index']);
     Route::post('documents', [DocumentController::class, 'store']);
     Route::get('documents/{document}', [DocumentController::class, 'show']);
-    // Route::post('documents/{document}/archive');
+    Route::patch('documents/{document}', [DocumentController::class, 'update']);
+    Route::post('documents/{document}/archive', [DocumentController::class, 'archive']);
 });
