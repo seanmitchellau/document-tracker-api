@@ -19,6 +19,7 @@ use Illuminate\Support\Carbon;
  * @property-read Carbon $expires_at
  * @property int $owner_id
  * @property Carbon|null $created_at
+ * @property Carbon|null $archived_at
  * @property Carbon|null $updated_at
  * @property-read User $owner
  *
@@ -38,12 +39,41 @@ class Document extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'path',
+        'expires_at',
+        'archived_at',
+    ];
+
     protected $casts = [
         'expires_at' => 'datetime',
+        'archived_at' => 'datetime',
     ];
 
     public function owner(): BelongsTo
     {
         return $this->belongsTo(User::class, 'owner_id');
+    }
+
+    public function scopeExpiringSoon(Builder $query): Builder
+    {
+        return $query
+            ->whereNotNull('expires_at')
+            ->where('expires_at', '>', now())
+            ->where('expires_at', '<=', now()->addDays(7))
+            ->whereNull('archived_at');
+    }
+
+    public function scopeExpired(Builder $query): Builder
+    {
+        return $query
+            ->whereNotNull('expires_at')
+            ->where('expires_at', '<=', now());
+    }
+
+    public function scopeNotArchived(Builder $query): Builder
+    {
+        return $query->whereNull('archived_at');
     }
 }
