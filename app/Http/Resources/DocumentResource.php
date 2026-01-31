@@ -17,6 +17,7 @@ class DocumentResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'expires_at' => $this->expires_at?->format('c'),
+            'archived_at' => $this->archived_at?->format('c'),
         ];
     }
 }
