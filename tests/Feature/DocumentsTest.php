@@ -283,18 +283,18 @@ class DocumentsTest extends TestCase
 
     // -- Pending validation --
 
-    //    public function testItCanNotStoreADocumentWithExpiryInThePast()
-    //    {
-    //        $user = User::factory()
-    //            ->create();
-    //
-    //        $this->actingAs($user);
-    //
-    //        $this->postJson('/documents', [
-    //            'name' => 'Contract',
-    //            'expires_at' => now()->subWeek()
-    //        ])->assertInvalid();
-    //    }
+    public function testItCanNotStoreADocumentWithExpiryInThePast()
+    {
+        $user = User::factory()
+            ->create();
+
+        $this->actingAs($user);
+
+        $this->postJson('/documents', [
+            'name' => 'Contract',
+            'expires_at' => now()->subWeek()
+        ])->assertInvalid();
+    }
 
     // -- Authentication --
 
